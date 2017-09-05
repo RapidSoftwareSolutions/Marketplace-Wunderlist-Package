@@ -1,0 +1,4823 @@
+{
+    "package": "Wunderlist",
+    "tagline": "Wunderlist API",
+    "description": "Wunderlist is the easiest way to get stuff done. Whether you\u2019re planning a holiday, sharing a shopping list with a partner or managing multiple work projects, Wunderlist is here to help you tick off all your personal and professional to-dos.",
+    "image": "https:\/\/logo.clearbit.com\/wunderlist.com",
+    "repo": "https:\/\/github.com\/RapidSoftwareSolutions\/Marketplace-Wunderlist-Package",
+    "keywords": [
+        "API",
+        "Plan",
+        "Reminded",
+        "Notification",
+        "Notes",
+        "Todo"
+    ],
+    "accounts": {
+        "domain": "www.wunderlist.com",
+        "credentials": [
+            "clientId",
+            "clientSecret"
+        ]
+    },
+    "steps": [
+        "Register on https://www.wunderlist.com",
+        "Create WunderList application in console https://developer.wunderlist.com/apps/new",
+        "After creation app, you will receive clienId and clientSecret."
+    ],
+    "blocks": [
+        {
+            "name": "getAccessToken",
+            "description": "Exchange code for an access token.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "client_secret",
+                    "type": "credentials",
+                    "info": "The client secret you received from Wunderlist when you registered.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "clientSecret"
+                    }
+                },
+                {
+                    "name": "code",
+                    "type": "String",
+                    "info": "The code you received as a auth response, see more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/www.wunderlist.com\/oauth\/access_token",
+                "method": "post",
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "code"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getAllFolders",
+            "description": "Get all Folders created by the the current User.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/folders",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getFolder",
+            "description": "Get a specific Folder.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "folderId",
+                    "type": "String",
+                    "info": "Single folder id which will be returned.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "folder_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/folders\/{$data['folder_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "folder_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createFolder",
+            "description": "Create a Folder.The created Folder is automatically owned by the User who creates it. Only the owner of a Folder can actually see\/request it.See more in readme.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Folder title (maximum length is 255 characters).",
+                    "required": true
+                },
+                {
+                    "name": "listIds",
+                    "type": "String",
+                    "info": "list of ids.",
+                    "structure": {
+                        "name": "listId",
+                        "type": "Number",
+                        "info": "Single list id which be added to the folder."
+                    },
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_ids"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/folders",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_ids",
+                            "title"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateFolder",
+            "description": "Update a Folder by overwriting properties.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "folderId",
+                    "type": "String",
+                    "info": "Single folder id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "folder_id"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Folder title (maximum length is 255 characters).",
+                    "required": false
+                },
+                {
+                    "name": "listIds",
+                    "type": "String",
+                    "info": "list of ids.",
+                    "structure": {
+                        "name": "listId",
+                        "type": "Number",
+                        "info": "Single list id which be added to the folder."
+                    },
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "list_ids"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/folders\/{$data['folder_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_ids",
+                            "title",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteFolder",
+            "description": "Delete a Folder permanently.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "folderId",
+                    "type": "String",
+                    "info": "Single folder id which will be deleted.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "folder_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/folders\/{$data['folder_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "revision",
+                            "folder_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getFolderRevisions",
+            "description": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. When the title of a task is changed, that task\u2019s revision is updated\u2014as well as the revisions of all of the parent items of that task, including list and root entities.See more in readme.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/folder_revisions",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getAllLists",
+            "description": "Get all Lists a user has permission to.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/lists",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getList",
+            "description": "Get a specific List.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/lists\/{$data['list_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createList",
+            "description": "Create a list.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Folder title (maximum length is 255 characters).",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/lists",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "title"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateList",
+            "description": "Update a list by overwriting properties.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Folder title (maximum length is 255 characters).",
+                    "required": false
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Folder title (maximum length is 255 characters).",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/lists\/{$data['list_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "title",
+                            "list_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteList",
+            "description": "Delete a list permanently.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Folder title (maximum length is 255 characters).",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/lists\/{$data['list_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getMembershipsForList",
+            "description": "Get Memberships for a List or the current User.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/memberships",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "AddMemberToListById",
+            "description": "Add a Member to a List by id.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "userId",
+                    "type": "Number",
+                    "info": "Single user id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "user_id"
+                    }
+                },
+                {
+                    "name": "muted",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Set true for user muted.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/memberships",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "user_id",
+                            "list_id",
+                            "muted"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "AddMemberToListByEmail",
+            "description": "Add a Member to a List by Email.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "email",
+                    "type": "String",
+                    "info": "Single user email.",
+                    "required": true
+                },
+                {
+                    "name": "muted",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Set true for user muted.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/memberships",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "email",
+                            "list_id",
+                            "muted"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "markMemberAsAccepted",
+            "description": "Mark a Member as accepted.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "member_id",
+                    "type": "Number",
+                    "info": "Single member id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "member_id"
+                    }
+                },
+                {
+                    "name": "muted",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Set true for user muted.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/memberships\/{$data['member_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "revision",
+                            "member_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "removeMemberFromList",
+            "description": "Remove a Member from a List.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "member_id",
+                    "type": "Number",
+                    "info": "Single member id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "member_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/memberships\/{$data['member_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "revision",
+                            "member_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "rejectInviteList",
+            "description": "Reject an invite to a List.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "member_id",
+                    "type": "Number",
+                    "info": "Single member id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "member_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/memberships\/{$data['member_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "revision",
+                            "member_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTaskNotes",
+            "description": "Get the Notes for a Task.A note is a large text blobs belonging to tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/notes",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getListNotes",
+            "description": "Get the Notes for a List.A note is a large text blobs belonging to tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/notes",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getNote",
+            "description": "Get a specific note.A note is a large text blobs belonging to tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "noteId",
+                    "type": "Number",
+                    "info": "Single note id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "note_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/notes\/{$data['note_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createNote",
+            "description": "Create a note.A note is a large text blobs belonging to tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "noteContent",
+                    "type": "String",
+                    "info": "Content of note.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "content"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/notes",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "task_id",
+                            "content"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateNote",
+            "description": "Update a note by overwriting properties.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "noteId",
+                    "type": "Number",
+                    "info": "Single note id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "note_id"
+                    }
+                },
+                {
+                    "name": "noteContent",
+                    "type": "String",
+                    "info": "Content of note.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "content"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/notes\/{$data['note_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "note_id",
+                            "content",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteNote",
+            "description": "Delete a note.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "noteId",
+                    "type": "Number",
+                    "info": "Single note id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "note_id"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/notes\/{$data['note_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "note_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getPositionsForUserLists",
+            "description": "Get Positions for a user's lists.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/list_positions",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getListPosition",
+            "description": "Get a specific list position.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listPositionId",
+                    "type": "Number",
+                    "info": "Single list position id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_position_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/list_positions\/{$data['list_position_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_position_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updatePositionsForUserLists",
+            "description": "Update Positions for a user's lists.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "positionListId",
+                    "type": "Number",
+                    "info": "Single position list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "position_list_id"
+                    }
+                },
+                {
+                    "name": " listIds",
+                    "type": "List",
+                    "info": "Single position list id.",
+                    "structure": {
+                        "name": "listId",
+                        "type": "Number",
+                        "info": "Single list id."
+                    },
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "values"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/list_positions\/{$data['position_list_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "values",
+                            "revision",
+                            "position_list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getPositionsForListTasks",
+            "description": "Get Positions for a list's tasks.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_positions",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTaskPosition",
+            "description": "Get a specific task position.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_positions\/{$data['task_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updatePositionsForListTasks",
+            "description": "Update Positions for a list's tasks.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "positionListId",
+                    "type": "Number",
+                    "info": "Single position list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "position_list_id"
+                    }
+                },
+                {
+                    "name": " listIds",
+                    "type": "List",
+                    "info": "Single position list id.",
+                    "structure": {
+                        "name": "listId",
+                        "type": "Number",
+                        "info": "Single list id."
+                    },
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "values"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_positions\/{$data['position_list_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "values",
+                            "revision",
+                            "position_list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getPositionsForTaskSubtasksByTaskId",
+            "description": "Get Positions for a task's subtasks.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSpecificSubtaskPosition",
+            "description": "Get a specific subtask position.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "subtaskId",
+                    "type": "Number",
+                    "info": "Single subtask id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "subtask_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions\/{$data['subtask_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "subtask_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updatePositionsForTaskSubtasks",
+            "description": "Update Positions for a task's subtasks.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "subtaskId",
+                    "type": "Number",
+                    "info": "Single subtask id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "subtask_id"
+                    }
+                },
+                {
+                    "name": " PositionsIds",
+                    "type": "List",
+                    "info": "Single position list id.",
+                    "structure": {
+                        "name": "positionId",
+                        "type": "Number",
+                        "info": "Single id."
+                    },
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "values"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions\/{$data['subtask_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "subtask_id",
+                            "values",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getRemindersForTask",
+            "description": "Get Reminders for a Task.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/reminders",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getRemindersForTList",
+            "description": "Get Reminders for a List.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/reminders",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createReminder",
+            "description": "Create a Reminder.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "date",
+                    "type": "DatePicker",
+                    "info": "Date for task.",
+                    "required": true,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d H:i:s}"
+                    }
+                },
+                {
+                    "name": "createdByDeviceUdid",
+                    "type": "DatePicker",
+                    "info": "Can be set to not schedule any reminder push notification for that device and that newly created reminder. This is mostly used by iOS, because they schedule a local reminder as well to have offline support.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "created_by_device_udid",
+                        "format": "toFormat:{Y-m-d H:i:s}"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/reminders",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "task_id",
+                            "date",
+                            "created_by_device_udid"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateReminder",
+            "description": "Update a Reminder.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "reminderId",
+                    "type": "Number",
+                    "info": "Single reminder id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "reminder_id"
+                    }
+                },
+                {
+                    "name": "date",
+                    "type": "DatePicker",
+                    "info": "Date for task.",
+                    "required": true,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d H:i:s}"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/reminders\/{$data['reminder_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "reminder_id",
+                            "date",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteReminder",
+            "description": "Delete a Reminder.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "reminderId",
+                    "type": "Number",
+                    "info": "Single reminder id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "reminder_id"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/reminders\/{$data['reminder_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "reminder_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getRootForCurrentUser",
+            "description": "Fetch the Root for the current User.Root is the top-level entity in the sync hierarchy.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/root",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSubtasksForTask",
+            "description": "Get Subtasks for a Task.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSubtasksForList",
+            "description": "Get Subtasks for a List.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getCompletedSubtasksForList",
+            "description": "Get Completed Subtasks.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Get Completed Subtasks.If set `false` - Get uncompleted Subtasks.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id",
+                            "completed"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getCompletedSubtasksForTask",
+            "description": "Get Completed Subtasks for a Task.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Get Completed Subtasks.If set `false` - Get uncompleted Subtasks.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id",
+                            "completed"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSpecificSubtask",
+            "description": "Get a specific subtask.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "subtaskId",
+                    "type": "Number",
+                    "info": "Single subtask id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "subtask_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks\/{$data['subtask_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "subtask_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createSubtask",
+            "description": "Create a subtask.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Title of subtask.Maximum length is 255",
+                    "required": true
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Completed Subtasks.If set `false` - uncompleted Subtasks.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "title",
+                            "completed",
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateSubtask",
+            "description": "Update a subtask by overwriting properties.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Title of subtask.Maximum length is 255",
+                    "required": true
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Completed Subtasks.If set `false` - uncompleted Subtasks.",
+                    "required": false
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks\/{$data['task_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "title",
+                            "completed",
+                            "task_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteSubtask",
+            "description": "Delete a subtask.Subtasks are children of tasks.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtasks\/{$data['task_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "task_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "GetTasksForList",
+            "description": "Get Tasks for a List.Tasks are children of lists.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/tasks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "GetCompletedTasksForList",
+            "description": "Get Completed Tasks.Tasks are children of lists.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Get Completed Subtasks.If set `false` - Get uncompleted Subtasks.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/tasks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id",
+                            "completed"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "GetSpecificTask",
+            "description": "Get a specific task.Tasks are children of lists.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/tasks\/{$data['task_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createTask",
+            "description": "Create a task.Tasks are children of lists.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Task title (maximum length is 255 characters).",
+                    "required": true
+                },
+                {
+                    "name": "assigneeId",
+                    "type": "Number",
+                    "info": "Single assignee id.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "assignee_id"
+                    }
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Get Completed Subtasks.If set `false` - Get uncompleted Subtasks.",
+                    "required": false
+                },
+                {
+                    "name": "recurrenceType",
+                    "type": "Select",
+                    "options": [
+                        "day",
+                        "week",
+                        "month",
+                        "year"
+                    ],
+                    "info": "Must be accompanied by recurrenceCount.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "recurrence_type"
+                    }
+                },
+                {
+                    "name": "recurrenceCount",
+                    "type": "Number",
+                    "info": "must be >= 1, must be accompanied by recurrenceType.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "recurrence_count"
+                    }
+                },
+                {
+                    "name": "dueDate",
+                    "type": "datePicker",
+                    "info": "Task date.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "due_date",
+                        "format": "toFormat:{Y-m-d H:i:s}"
+                    }
+                },
+                {
+                    "name": "starred",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/tasks",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_id",
+                            "title",
+                            "assignee_id",
+                            "completed",
+                            "recurrence_type",
+                            "recurrence_count",
+                            "due_date",
+                            "starred"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateTask",
+            "description": "Update a task by overwriting properties.Tasks are children of lists.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Task id which will be updated.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Can be given to move the Task into a different List.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "title",
+                    "type": "String",
+                    "info": "Task title (maximum length is 255 characters).",
+                    "required": false
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                },
+                {
+                    "name": "assigneeId",
+                    "type": "Number",
+                    "info": "Single assignee id.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "assignee_id"
+                    }
+                },
+                {
+                    "name": "completed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set `true` - Get Completed Subtasks.If set `false` - Get uncompleted Subtasks.",
+                    "required": false
+                },
+                {
+                    "name": "recurrenceType",
+                    "type": "Select",
+                    "options": [
+                        "day",
+                        "week",
+                        "month",
+                        "year"
+                    ],
+                    "info": "Must be accompanied by recurrenceCount.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "recurrence_type"
+                    }
+                },
+                {
+                    "name": "recurrenceCount",
+                    "type": "Number",
+                    "info": "must be >= 1, must be accompanied by recurrenceType.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "recurrence_count"
+                    }
+                },
+                {
+                    "name": "dueDate",
+                    "type": "datePicker",
+                    "info": "Task date.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "due_date",
+                        "format": "toFormat:{Y-m-d H:i:s}"
+                    }
+                },
+                {
+                    "name": "starred",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "",
+                    "required": false
+                },
+                {
+                    "name": "remove",
+                    "type": "String",
+                    "info": "An list of attributes to delete from the task, e.g. 'dueDate'",
+                    "structure": {
+                        "name": "attributeName",
+                        "type": "String",
+                        "info": "Single attribute name."
+                    },
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/tasks\/{$data['task_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_id",
+                            "title",
+                            "assignee_id",
+                            "completed",
+                            "recurrence_type",
+                            "recurrence_count",
+                            "due_date",
+                            "starred",
+                            "revision",
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteTask",
+            "description": "Delete a task.Tasks are children of lists.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Task id which will be updated.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/tasks\/{$data['task_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "revision",
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getCommentsForTask",
+            "description": "Get the Comments for a Task.A taskComment is a comment that belongs to a task.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Task comment id which will be read.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_comments",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getCommentsForList",
+            "description": "Get the Comments for a List.A taskComment is a comment that belongs to a task.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "List comment id which will be read.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_comments",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSpecificComment",
+            "description": "Get a specific Comment.A taskComment is a comment that belongs to a task.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "commentId",
+                    "type": "Number",
+                    "info": "Single comment id which will be read.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "comment_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_comments\/{$data['comment_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "comment_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createComment",
+            "description": "Create a Comment.A taskComment is a comment that belongs to a task.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id which will be added comment.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "text",
+                    "type": "String",
+                    "info": "Text for comment.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_comments",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "task_id",
+                            "text"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getCurrentlyLoggedUser",
+            "description": "Fetch the currently logged in user.All info related to the currently signed in user.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/user",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getUserAccessForList",
+            "description": "Fetch the users this user can access.All info related to the currently signed in user.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Restricts the list of returned users to only those who have access to a particular list.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/user",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getAllWebhooks",
+            "description": "Get all webhooks for a list.A webhook sends notifications when a list is updated.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Restricts the list of returned webhooks.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/webhooks",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createWebhook",
+            "description": "Create a Webhook.A webhook sends notifications when a list is updated.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Restricts the list of returned webhooks.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                },
+                {
+                    "name": "webhookUrl",
+                    "type": "String",
+                    "info": "Callback url for webhook.Maximum length is 255 characters.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "url"
+                    }
+                },
+                {
+                    "name": "processorType",
+                    "type": "String",
+                    "info": "can be ''''.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "processor_type"
+                    }
+                },
+                {
+                    "name": "configuration",
+                    "type": "String",
+                    "info": "Example. - generic.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "processor_type"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/webhooks",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_id",
+                            "url",
+                            "processor_type",
+                            "configuration"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteWebhook",
+            "description": "Delete a Webhook.A webhook sends notifications when a list is updated.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "webhookId",
+                    "type": "Number",
+                    "info": "Webhook id which will be deleted.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "webhook_id"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/webhooks\/{$data['webhook_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "list_id",
+                            "revision",
+                            "webhook_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getFilesForTask",
+            "description": "Get Files for a Task.The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/files",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "task_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getFilesForList",
+            "description": "Get Files for a Task.The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "listId",
+                    "type": "Number",
+                    "info": "Single list id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "list_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/files",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "list_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSpecificFile",
+            "description": "Get a specific File.The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "fileId",
+                    "type": "Number",
+                    "info": "File id which will be returned.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "file_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/files\/{$data['file_id']}",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "file_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createFile",
+            "description": "Create a File.The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "uploadId",
+                    "type": "Number",
+                    "info": "Upload id which will be attached.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "upload_id"
+                    }
+                },
+                {
+                    "name": "taskId",
+                    "type": "Number",
+                    "info": "Single task id.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "task_id"
+                    }
+                },
+                {
+                    "name": "localCreatedAt",
+                    "type": "DatePicker",
+                    "info": "For creating files we have introduced the :localCreatedAt from comments again. This attribute will help us later to sort the files and comments in the right order. ",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "local_created_at",
+                        "format": "toFormat:{Y-m-d H:i:s}"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/files",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "file_id",
+                            "upload_id",
+                            "task_id",
+                            "local_created_at"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteFile",
+            "description": "Destroy a File.The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "fileId",
+                    "type": "Number",
+                    "info": "File id which will be returned.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "file_id"
+                    }
+                },
+                {
+                    "name": "revision",
+                    "type": "Number",
+                    "info": "Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/files\/{$data['file_id']}",
+                "method": "delete",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "file_id",
+                            "revision"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getPreviewOfFile",
+            "description": "A file preview is an image thumbnail for a file.The preview endpoint will generate a preview image on-demand for the given file. This endpoint only works with images for now.See more in readme.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "fileId",
+                    "type": "Number",
+                    "info": "File id which will be returned.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "file_id"
+                    }
+                },
+                {
+                    "name": "platform",
+                    "type": "Select",
+                    "options": [
+                        "mac",
+                        "web",
+                        "windows",
+                        "iphone",
+                        "ipad",
+                        "android"
+                    ],
+                    "info": "Platform for preview.",
+                    "required": false
+                },
+                {
+                    "name": "size",
+                    "type": "Select",
+                    "options": [
+                        "nonretina",
+                        "retina"
+                    ],
+                    "info": "Size for preview.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/previews",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "file_id",
+                            "platform",
+                            "size"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createUpload",
+            "description": "The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "uploadFile",
+                    "type": "File",
+                    "info": "Upload file.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "upload_file"
+                    }
+                },
+                {
+                    "name": "partNumber",
+                    "type": "Number",
+                    "info": "The partNumber attribute always starts with 1, never with 0. The expiresAt date represents the lifetime of the given part.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "part_number"
+                    }
+                },
+                {
+                    "name": "md5sum",
+                    "type": "String",
+                    "info": "Md5 hash.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "md5sum"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/uploads",
+                "method": "post",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "md5sum",
+                            "part_number",
+                            "upload_file"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getUploadParts",
+            "description": "Fetching new parts for the chunked upload.If you need more than one part to upload the new file you need to call the following endpoint to get another one.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "uploadId",
+                    "type": "Number",
+                    "info": "Upload id which will be returned.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "upload_id"
+                    }
+                },
+                {
+                    "name": "partNumber",
+                    "type": "Number",
+                    "info": "The partNumber attribute always starts with 1, never with 0. The expiresAt date represents the lifetime of the given part.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "part_number"
+                    }
+                },
+                {
+                    "name": "md5sum",
+                    "type": "String",
+                    "info": "Md5 hash.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "md5sum"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/uploads\/{$data['upload_id']}\/parts",
+                "method": "get",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "md5sum",
+                            "part_number",
+                            "upload_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "markUploadAsFinished",
+            "description": "Mark the upload as finished.",
+            "args": [
+                {
+                    "name": "clientId",
+                    "type": "credentials",
+                    "info": " The Client ID you received from Wunderlist when you registered your application.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "client_id"
+                    }
+                },
+                {
+                    "name": "accessToken",
+                    "type": "String",
+                    "info": "OAuth token for the current user.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "access_token"
+                    }
+                },
+                {
+                    "name": "uploadId",
+                    "type": "Number",
+                    "info": "Upload id which will be returned.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "upload_id"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/uploads\/{$data['upload_id']}",
+                "method": "patch",
+                "headers": {
+                    "X-Access-Token": "{$data['access_token']}",
+                    "X-Client-ID": "{$data['client_id']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "upload_id"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        }
+    ]
+}
