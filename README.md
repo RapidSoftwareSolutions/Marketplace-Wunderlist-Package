@@ -2,11 +2,11 @@
 
 # Wunderlist Package
 Wunderlist is the easiest way to get stuff done. Whether you’re planning a holiday, sharing a shopping list with a partner or managing multiple work projects, Wunderlist is here to help you tick off all your personal and professional to-dos.
-* Domain: [www.wunderlist.com](https://www.wunderlist.com)
+* Domain: [wunderlist.com](https://www.wunderlist.com)
 * Credentials: clientId, clientSecret
 
 ## How to get credentials: 
-1. Register on [www.wunderlist.com](https://www.wunderlist.com)
+1. Register on [wunderlist.com](https://www.wunderlist.com)
 2. Create WunderList application in [console](https://developer.wunderlist.com/apps/new) 
 3. After creation app, you will receive clienId and clientSecret
  
