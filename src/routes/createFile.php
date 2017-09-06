@@ -4,7 +4,7 @@ $app->post('/api/Wunderlist/createFile', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','uploadId','taskId','localCreatedAt']);
+    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','uploadId','taskId']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/createFile', function ($request, $response) {
     $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','uploadId'=>'upload_id','taskId'=>'task_id','localCreatedAt'=>'local_created_at'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['file_id','upload_id','task_id','local_created_at']
+       'json' => ['upload_id','task_id','local_created_at']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

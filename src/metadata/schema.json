@@ -214,7 +214,7 @@
                 },
                 {
                     "name": "listIds",
-                    "type": "String",
+                    "type": "List",
                     "info": "list of ids.",
                     "structure": {
                         "name": "listId",
@@ -300,7 +300,7 @@
                 },
                 {
                     "name": "listIds",
-                    "type": "String",
+                    "type": "List",
                     "info": "list of ids.",
                     "structure": {
                         "name": "listId",
@@ -4414,7 +4414,7 @@
                     "name": "localCreatedAt",
                     "type": "DatePicker",
                     "info": "For creating files we have introduced the :localCreatedAt from comments again. This attribute will help us later to sort the files and comments in the right order. ",
-                    "required": true,
+                    "required": false,
                     "vendorSchema": {
                         "name": "local_created_at",
                         "format": "toFormat:{Y-m-d H:i:s}"
@@ -4634,6 +4634,15 @@
                     }
                 },
                 {
+                    "name": "fileName",
+                    "type": "String",
+                    "info": "File name.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "file_name"
+                    }
+                },
+                {
                     "name": "partNumber",
                     "type": "Number",
                     "info": "The partNumber attribute always starts with 1, never with 0. The expiresAt date represents the lifetime of the given part.",
@@ -4665,7 +4674,8 @@
                         "parameters": [
                             "md5sum",
                             "part_number",
-                            "upload_file"
+                            "upload_file",
+                            "file_name"
                         ]
                     }
                 ]
