@@ -27,7 +27,7 @@ Exchange code for an access token.
 |--------------|------------|----------
 | clientId     | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | client_secret| credentials| The client secret you received from Wunderlist when you registered.
-| code         | String     | The code you received as a auth response, see more in readme.
+| code         | String     | The code you received as a auth response, see more [here](https://developer.wunderlist.com/documentation/concepts/authorization).
 
 ## Wunderlist.getAllFolders
 Get all Folders created by the the current User.
@@ -63,7 +63,7 @@ Update a Folder by overwriting properties.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | folderId   | String     | Single folder id.
 | title      | String     | Folder title (maximum length is 255 characters).
 | listIds    | String     | list of ids.
@@ -75,11 +75,11 @@ Delete a Folder permanently.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | folderId   | String     | Single folder id which will be deleted.
 
 ## Wunderlist.getFolderRevisions
-Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. When the title of a task is changed, that task’s revision is updated—as well as the revisions of all of the parent items of that task, including list and root entities.See more in readme.
+Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. When the title of a task is changed, that task’s revision is updated—as well as the revisions of all of the parent items of that task, including list and root entities.See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 | Field      | Type       | Description
 |------------|------------|----------
@@ -119,7 +119,7 @@ Update a list by overwriting properties.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | title      | String     | Folder title (maximum length is 255 characters).
 | listId     | Number     | Folder title (maximum length is 255 characters).
 
@@ -130,7 +130,7 @@ Delete a list permanently.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | listId     | Number     | Folder title (maximum length is 255 characters).
 
 ## Wunderlist.getMembershipsForList
@@ -170,7 +170,7 @@ Mark a Member as accepted.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | member_id  | Number     | Single member id.
 | muted      | Select     | Set true for user muted.
 
@@ -181,7 +181,7 @@ Remove a Member from a List.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | member_id  | Number     | Single member id.
 
 ## Wunderlist.rejectInviteList
@@ -191,7 +191,7 @@ Reject an invite to a List.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | member_id  | Number     | Single member id.
 
 ## Wunderlist.getTaskNotes
@@ -240,7 +240,7 @@ Update a note by overwriting properties.
 | accessToken| String     | OAuth token for the current user.
 | noteId     | Number     | Single note id.
 | noteContent| String     | Content of note.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.deleteNote
 Delete a note.
@@ -250,7 +250,7 @@ Delete a note.
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
 | noteId     | Number     | Single note id.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getPositionsForUserLists
 Get Positions for a user's lists.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.
@@ -278,7 +278,7 @@ Update Positions for a user's lists.A list of ordered, unique integers related t
 | accessToken   | String     | OAuth token for the current user.
 | positionListId| Number     | Single position list id.
 |  listIds      | List       | Single position list id.
-| revision      | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision      | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getPositionsForListTasks
 Get Positions for a list's tasks.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.
@@ -307,7 +307,7 @@ Update Positions for a list's tasks.A list of ordered, unique integers related t
 | accessToken   | String     | OAuth token for the current user.
 | positionListId| Number     | Single position list id.
 |  listIds      | List       | Single position list id.
-| revision      | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision      | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getPositionsForTaskSubtasksByTaskId
 Get Positions for a task's subtasks.A list of ordered, unique integers related to a users's lists or a list's tasks or a task's subtasks.
@@ -336,7 +336,7 @@ Update Positions for a task's subtasks.A list of ordered, unique integers relate
 | accessToken  | String     | OAuth token for the current user.
 | subtaskId    | Number     | Single subtask id.
 |  PositionsIds| List       | Single position list id.
-| revision     | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision     | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getRemindersForTask
 Get Reminders for a Task.
@@ -376,7 +376,7 @@ Update a Reminder.
 | accessToken| String     | OAuth token for the current user.
 | reminderId | Number     | Single reminder id.
 | date       | DatePicker | Date for task.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.deleteReminder
 Delete a Reminder.
@@ -386,7 +386,7 @@ Delete a Reminder.
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
 | reminderId | Number     | Single reminder id.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getRootForCurrentUser
 Fetch the Root for the current User.Root is the top-level entity in the sync hierarchy.
@@ -464,7 +464,7 @@ Update a subtask by overwriting properties.Subtasks are children of tasks.
 | taskId     | Number     | Single task id.
 | title      | String     | Title of subtask.Maximum length is 255
 | completed  | Select     | If set `true` - Completed Subtasks.If set `false` - uncompleted Subtasks.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.deleteSubtask
 Delete a subtask.Subtasks are children of tasks.
@@ -474,7 +474,7 @@ Delete a subtask.Subtasks are children of tasks.
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
 | taskId     | Number     | Single task id.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.GetTasksForList
 Get Tasks for a List.Tasks are children of lists.
@@ -530,7 +530,7 @@ Update a task by overwriting properties.Tasks are children of lists.
 | taskId         | Number     | Task id which will be updated.
 | listId         | Number     | Can be given to move the Task into a different List.
 | title          | String     | Task title (maximum length is 255 characters).
-| revision       | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision       | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 | assigneeId     | Number     | Single assignee id.
 | completed      | Select     | If set `true` - Get Completed Subtasks.If set `false` - Get uncompleted Subtasks.
 | recurrenceType | Select     | Must be accompanied by recurrenceCount.
@@ -547,7 +547,7 @@ Delete a task.Tasks are children of lists.
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
 | taskId     | Number     | Task id which will be updated.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getCommentsForTask
 Get the Comments for a Task.A taskComment is a comment that belongs to a task.
@@ -632,7 +632,7 @@ Delete a Webhook.A webhook sends notifications when a list is updated.
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
 | webhookId  | Number     | Webhook id which will be deleted.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getFilesForTask
 Get Files for a Task.The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.
@@ -680,10 +680,10 @@ Destroy a File.The first resource that needs to be created to upload a file is t
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
 | fileId     | Number     | File id which will be returned.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more in readme.
+| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.getPreviewOfFile
-A file preview is an image thumbnail for a file.The preview endpoint will generate a preview image on-demand for the given file. This endpoint only works with images for now.See more in readme.
+A file preview is an image thumbnail for a file.The preview endpoint will generate a preview image on-demand for the given file. This endpoint only works with images for now.See more [here](https://developer.wunderlist.com/documentation/endpoints/file_preview).
 
 | Field      | Type       | Description
 |------------|------------|----------
@@ -700,9 +700,21 @@ The first resource that needs to be created to upload a file is the Upload resou
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| uploadFile | File       | Upload file.
 | partNumber | Number     | The partNumber attribute always starts with 1, never with 0. The expiresAt date represents the lifetime of the given part.
+| fileSize | Number     | File size.
+| contentType | String    |  Content type of file.
+| fileName | String     | File name.
 | md5sum     | String     | Md5 hash.
+
+## Wunderlist.createFileOnAmazon
+After call createUpload endpoints , the needed information and credentials to upload your first part to the given Amazon URL.See more [here](https://developer.wunderlist.com/documentation/endpoints/upload).
+
+| Field      | Type       | Description
+|------------|------------|----------
+| uploadUrl   | String |  Upload url field from createUpload endpoints.
+| uploadFile| File    | Upload file.
+| uploadDate | String     | With the `date` string of the part from createUpload endpoints.
+| uploadAuthorization | String     | With the `authorization` string of the part. from createUpload endpoints.
 
 ## Wunderlist.getUploadParts
 Fetching new parts for the chunked upload.If you need more than one part to upload the new file you need to call the following endpoint to get another one.

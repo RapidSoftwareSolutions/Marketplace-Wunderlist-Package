@@ -1,38 +1,52 @@
 <?php
 
-$app->post('/api/Wunderlist/test', function ($request, $response) {
+$app->post('/api/Wunderlist/uploadFileOnAmazon', function ($request, $response) {
 
 
-
-    print_r($request);
-    exit();
-
-
+    ini_set('display_errors',1);
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, []);
+    $validateRes = $checkRequest->validate($request, ['uploadFile','uploadUrl','uploadDate','uploadAuthorization']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
     } else {
         $post_data = $validateRes;
     }
-    $size = 45586;
+
+    $requiredParams = ['uploadFile'=>'upload_file','uploadUrl'=>'upload_url','uploadDate'=>'date','uploadAuthorization'=>'authorization'];
+    $optionalParams = [];
+    $bodyParams = [
+       'form_params' => []
+    ];
+
+    $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
+
+
 
     $client = $this->httpClient;
-    $filePath = 'https://hi-news.ru/wp-content/uploads/2016/10/1448366149-650x366.jpg';
+    $query_str = "{$data['upload_url']}";
+    $filePath = $data['upload_file'];
+    $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
+    $requestParams['headers'] = ["Content-Type"=>"", "Authorization"=>"{$data['authorization']}", "x-amz-date"=>"{$data['date']}"];
+//    $requestParams['multipart'] = [
+//        [
+//            'name' => 'length',
+//            'contents' => 45586
+//        ],
+//        [
+//            'name' => 'file',
+//            'filename' => '1448366149-650x366.jpg',
+//            'contents' => fopen($filePath,'r')
+//        ]
+//    ];
+
+    $requestParams['body'] = fopen($filePath,'r');
+
 
     try {
-        $resp = $client->put('https://upload.wunderlist.io/6740a0d0-7513-0135-adda-22000ac5e637-1504689996-278221?partNumber=1&uploadId=Dq1xIXMF_ppOVOQIHQQxjcCEQI0lKI5oKDSZWjNEQxIml4y36J3qiPtIeKrGM1M1AWIi5mbnZvkhb9ufgwtnk0xA2obDvH8uRIBGhURMp5rTnkl9dHeeZwmpVZkQgi1D'
-            ,[   'multipart' => [
-                [
-                    'name' => 'file',
-                    'contents' => fread(fopen( $filePath, 'r'),$size)
-                ]],
-
-                'headers' => ['x-amz-date' => 'Wed, 06 Sep 2017 09:31:36 UTC +00:00','Authorization' => 'AWS AKIAJEN6W4AO3LJODOAA:lSRJwcmsyT8bdMelMASnz2g4GBA=','Content-Type' => ""]
-            ]);
+        $resp = $client->put($query_str, $requestParams);
         $responseBody = $resp->getBody()->getContents();
 
         if(in_array($resp->getStatusCode(), ['200', '201', '202', '203', '204'])) {

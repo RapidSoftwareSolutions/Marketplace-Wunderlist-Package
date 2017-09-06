@@ -149,7 +149,7 @@
                 },
                 {
                     "name": "folderId",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Single folder id which will be returned.",
                     "required": true,
                     "vendorSchema": {
@@ -285,7 +285,7 @@
                 },
                 {
                     "name": "folderId",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Single folder id.",
                     "required": true,
                     "vendorSchema": {
@@ -372,7 +372,7 @@
                 },
                 {
                     "name": "folderId",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Single folder id which will be deleted.",
                     "required": true,
                     "vendorSchema": {
@@ -3346,7 +3346,7 @@
                 },
                 {
                     "name": "dueDate",
-                    "type": "datePicker",
+                    "type": "DatePicker",
                     "info": "Task date.",
                     "required": false,
                     "vendorSchema": {
@@ -3496,7 +3496,7 @@
                 },
                 {
                     "name": "dueDate",
-                    "type": "datePicker",
+                    "type": "DatePicker",
                     "info": "Task date.",
                     "required": false,
                     "vendorSchema": {
@@ -4604,7 +4604,7 @@
         },
         {
             "name": "createUpload",
-            "description": "The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.",
+            "description": "The first resource that needs to be created to upload a file is the Upload resource. After the upload is finished you need to create a new File resource that will published via real time to all the other members of the List you are creating the File in.See more in readme.",
             "args": [
                 {
                     "name": "clientId",
@@ -4625,12 +4625,21 @@
                     }
                 },
                 {
-                    "name": "uploadFile",
-                    "type": "File",
-                    "info": "Upload file.",
+                    "name": "fileSize",
+                    "type": "Number",
+                    "info": "File size.",
                     "required": true,
                     "vendorSchema": {
-                        "name": "upload_file"
+                        "name": "file_size"
+                    }
+                },
+                {
+                    "name": "contentType",
+                    "type": "String",
+                    "info": "Content type of file.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "content_type"
                     }
                 },
                 {
@@ -4675,7 +4684,80 @@
                             "md5sum",
                             "part_number",
                             "upload_file",
-                            "file_name"
+                            "file_name",
+                            "content_type",
+                            "file_size"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "uploadFileOnAmazon",
+            "description": "After call createUpload endpoints , the needed information and credentials to upload your first part to the given Amazon URL.See more in readme.",
+            "args": [
+                {
+                    "name": "uploadFile",
+                    "type": "File",
+                    "info": "Upload file.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "upload_file"
+                    }
+                },
+                {
+                    "name": "uploadUrl",
+                    "type": "String",
+                    "info": "Upload url field from createUpload endpoints.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "upload_url"
+                    }
+                },
+                {
+                    "name": "uploadDate",
+                    "type": "String",
+                    "info": "With the `date` string of the part from createUpload endpoints.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "date"
+                    }
+                },
+                {
+                    "name": "uploadAuthorization",
+                    "type": "String",
+                    "info": "With the `authorization` string of the part. from createUpload endpoints.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "authorization"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "{$data['upload_url']}",
+                "method": "put",
+                "headers": {
+                    "Content-Type": "",
+                    "Authorization": "{$data['authorization']}",
+                    "x-amz-date": "{$data['date']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "file_name",
+                            "content_type",
+                            "file_size"
                         ]
                     }
                 ]

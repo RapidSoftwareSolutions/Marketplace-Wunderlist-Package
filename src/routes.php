@@ -72,7 +72,8 @@ $routes = [
     'getPreviewOfFile',
     'createUpload',
     'getUploadParts',
-    'markUploadAsFinished'
+    'markUploadAsFinished',
+    'uploadFileOnAmazon'
 ];
 foreach($routes as $file) {
     require __DIR__ . '/../src/routes/'.$file.'.php';
