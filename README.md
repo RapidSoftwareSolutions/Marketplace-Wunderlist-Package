@@ -27,7 +27,7 @@ Exchange code for an access token.
 |--------------|------------|----------
 | clientId     | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | client_secret| credentials| The client secret you received from Wunderlist when you registered.
-| code         | String     | The code you received as a auth response, see more [here](https://developer.wunderlist.com/documentation/concepts/authorization).
+| code         | String     | The code you received as auth response, see more [here](https://developer.wunderlist.com/documentation/concepts/authorization).
 
 ## Wunderlist.getAllFolders
 Get all Folders created by the the current User.
@@ -461,7 +461,7 @@ Update a subtask by overwriting properties.Subtasks are children of tasks.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| taskId     | Number     | Single task id.
+| subtaskId     | Number     | Single subtask id.
 | title      | String     | Title of subtask.Maximum length is 255
 | completed  | Select     | If set `true` - Completed Subtasks.If set `false` - uncompleted Subtasks.
 | revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
@@ -473,7 +473,7 @@ Delete a subtask.Subtasks are children of tasks.
 |------------|------------|----------
 | clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
 | accessToken| String     | OAuth token for the current user.
-| taskId     | Number     | Single task id.
+| subtaskId     | Number     | Single subtask id.
 | revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
 
 ## Wunderlist.GetTasksForList

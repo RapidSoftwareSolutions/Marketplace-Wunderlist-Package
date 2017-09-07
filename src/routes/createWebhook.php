@@ -12,7 +12,7 @@ $app->post('/api/Wunderlist/createWebhook', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','listId'=>'list_id','webhookUrl'=>'url','processorType'=>'processor_type','configuration'=>'processor_type'];
+    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','listId'=>'list_id','webhookUrl'=>'url','processorType'=>'processor_type','configuration'=>'configuration'];
     $optionalParams = [];
     $bodyParams = [
        'json' => ['list_id','url','processor_type','configuration']

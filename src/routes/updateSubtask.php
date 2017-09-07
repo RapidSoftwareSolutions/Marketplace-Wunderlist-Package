@@ -4,7 +4,7 @@ $app->post('/api/Wunderlist/updateSubtask', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','taskId','title','revision']);
+    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','subtaskId','title','revision']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,7 +12,7 @@ $app->post('/api/Wunderlist/updateSubtask', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','taskId'=>'task_id','title'=>'title','revision'=>'revision'];
+    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','subtaskId'=>'task_id','title'=>'title','revision'=>'revision'];
     $optionalParams = ['completed'=>'completed'];
     $bodyParams = [
        'json' => ['title','completed','task_id','revision']

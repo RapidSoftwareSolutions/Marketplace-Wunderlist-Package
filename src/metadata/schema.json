@@ -2950,9 +2950,9 @@
                     }
                 },
                 {
-                    "name": "taskId",
+                    "name": "subtaskId",
                     "type": "Number",
-                    "info": "Single task id.",
+                    "info": "Single subtasktask id.",
                     "required": true,
                     "vendorSchema": {
                         "name": "task_id"
@@ -3034,9 +3034,9 @@
                     }
                 },
                 {
-                    "name": "taskId",
+                    "name": "subtaskId",
                     "type": "Number",
-                    "info": "Single task id.",
+                    "info": "Single subtask id.",
                     "required": true,
                     "vendorSchema": {
                         "name": "task_id"
@@ -4092,7 +4092,7 @@
                     "info": "Example. - generic.",
                     "required": true,
                     "vendorSchema": {
-                        "name": "processor_type"
+                        "name": "configuration"
                     }
                 }
             ],
