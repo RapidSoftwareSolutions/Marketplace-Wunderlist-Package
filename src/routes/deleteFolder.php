@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/deleteFolder', function ($request, $response) {
     $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','revision'=>'revision','folderId'=>'folder_id'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['revision','folder_id']
+       'query' => ['revision','folder_id']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

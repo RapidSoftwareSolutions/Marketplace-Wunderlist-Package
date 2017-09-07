@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/rejectInviteList', function ($request, $response) {
     $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','revision'=>'revision','member_id'=>'member_id'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['revision','member_id']
+       'query' => ['revision','member_id']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/deleteList', function ($request, $response) {
     $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','revision'=>'revision'];
     $optionalParams = ['listId'=>'list_id'];
     $bodyParams = [
-       'json' => ['list_id','revision']
+       'query' => ['list_id','revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

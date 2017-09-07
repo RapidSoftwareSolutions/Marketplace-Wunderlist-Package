@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/deleteSubtask', function ($request, $response) {
     $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','subtaskId'=>'task_id','revision'=>'revision'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['task_id','revision']
+       'query' => ['task_id','revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

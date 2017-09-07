@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/deleteReminder', function ($request, $response) {
     $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','reminderId'=>'reminder_id','revision'=>'revision'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['reminder_id','revision']
+       'query' => ['reminder_id','revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

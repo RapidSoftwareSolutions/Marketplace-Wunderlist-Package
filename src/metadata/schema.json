@@ -22,7 +22,7 @@
     "steps": [
         "Register on https://www.wunderlist.com",
         "Create WunderList application in console https://developer.wunderlist.com/apps/new",
-        "After creation app, you will receive clienId and clientSecret."
+        "After creating app, you will receive clienId and clientSecret."
     ],
     "blocks": [
         {
@@ -389,7 +389,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "revision",
                             "folder_id"
@@ -739,7 +739,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "list_id",
                             "revision"
@@ -1086,7 +1086,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "revision",
                             "member_id"
@@ -3058,7 +3058,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "task_id",
                             "revision"
@@ -3609,7 +3609,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "revision",
                             "task_id"
@@ -4173,7 +4173,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "list_id",
                             "revision",
