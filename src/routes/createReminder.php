@@ -2,6 +2,8 @@
 
 $app->post('/api/Wunderlist/createReminder', function ($request, $response) {
 
+    ini_set('display_errors',1);
+
     $settings = $this->settings;
     $checkRequest = $this->validation;
     $validateRes = $checkRequest->validate($request, ['clientId','accessToken','taskId','date']);
@@ -21,8 +23,12 @@ $app->post('/api/Wunderlist/createReminder', function ($request, $response) {
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
     
-    $data['date'] = \Models\Params::toFormat($data['date'], 'Y-m-d H'); 
-    $data['createdByDeviceUdid'] = \Models\Params::toFormat($data['createdByDeviceUdid'], 'Y-m-d H'); 
+    $data['date'] = \Models\Params::toFormat($data['date'], 'Y-m-d H:i:s');
+    if(!empty($data['created_by_device_udid']))
+    {
+        $data['created_by_device_udid'] = \Models\Params::toFormat($data['created_by_device_udid'], 'Y-m-d H:i:s');
+    }
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/reminders";

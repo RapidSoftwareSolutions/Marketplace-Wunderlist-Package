@@ -21,7 +21,7 @@ $app->post('/api/Wunderlist/createTask', function ($request, $response) {
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
     
-    $data['dueDate'] = \Models\Params::toFormat($data['dueDate'], 'Y-m-d H'); 
+    $data['due_date'] = \Models\Params::toFormat($data['due_date'], 'Y-m-d H:i:s');
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/tasks";
