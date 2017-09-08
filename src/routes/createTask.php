@@ -2,6 +2,7 @@
 
 $app->post('/api/Wunderlist/createTask', function ($request, $response) {
 
+
     $settings = $this->settings;
     $checkRequest = $this->validation;
     $validateRes = $checkRequest->validate($request, ['clientId','accessToken','listId','title']);
@@ -20,8 +21,11 @@ $app->post('/api/Wunderlist/createTask', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
-    $data['due_date'] = \Models\Params::toFormat($data['due_date'], 'Y-m-d H:i:s');
+    if(!empty($data['due_date']))
+    {
+        $data['due_date'] = \Models\Params::toFormat($data['due_date'], 'Y-m-d H:i:s');
+    }
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/tasks";

@@ -33,10 +33,11 @@ $app->post('/api/Wunderlist/createReminder', function ($request, $response) {
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/reminders";
 
-    
+    $data['task_id'] = (int) $data['task_id'];
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];
+
 
     try {
         $resp = $client->post($query_str, $requestParams);
