@@ -35,6 +35,15 @@ $app->post('/api/Wunderlist/updatePositionsForUserLists', function ($request, $r
         $data['position_list_id'] = (int) $data['position_list_id'] ;
     }
 
+    if(!empty($data['values']))
+    {
+        foreach($data['values'] as $key => $value)
+        {
+            $data['values'][$key] = (int) $data['values'][$value];
+        }
+    }
+
+
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];
 

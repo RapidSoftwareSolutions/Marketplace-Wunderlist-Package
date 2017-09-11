@@ -4080,7 +4080,7 @@
                 {
                     "name": "processorType",
                     "type": "String",
-                    "info": "can be ''''.",
+                    "info": "can be ''.",
                     "required": true,
                     "vendorSchema": {
                         "name": "processor_type"

@@ -31,6 +31,14 @@ $app->post('/api/Wunderlist/updatePositionsForTaskSubtasks', function ($request,
         $data['revision'] = (int) $data['revision'] ;
     }
 
+    if(!empty($data['values']))
+    {
+        foreach($data['values'] as $key => $value)
+        {
+            $data['values'][$key] = (int) $data['values'][$value];
+        }
+    }
+
 
     if(!empty($data['subtask_id']))
     {

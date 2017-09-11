@@ -20,6 +20,16 @@ $app->post('/api/Wunderlist/getCompletedSubtasksForTask', function ($request, $r
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
+    if(!empty($data['completed']))
+    {
+        if($data['completed'] == 'true')
+        {
+            $data['completed'] = true;
+        } else {
+            $data['completed'] = false;
+        }
+
+    }
     
 
     $client = $this->httpClient;

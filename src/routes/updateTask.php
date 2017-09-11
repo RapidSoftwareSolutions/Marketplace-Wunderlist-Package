@@ -23,6 +23,29 @@ $app->post('/api/Wunderlist/updateTask', function ($request, $response) {
     
     $data['dueDate'] = \Models\Params::toFormat($data['dueDate'], 'Y-m-d H:i:s');
 
+    if(!empty($data['list_id']))
+    {
+        $data['list_id'] = (int) $data['list_id'] ;
+    }
+
+    if(!empty($data['recurrence_count']))
+    {
+        $data['recurrence_count'] = (int) $data['recurrence_count'] ;
+    }
+
+    if(!empty($data['assignee_id']))
+    {
+        $data['assignee_id'] = (int) $data['assignee_id'];
+    }
+
+    if(!empty($data['task_id']))
+    {
+        $data['task_id'] = (int) $data['task_id'];
+    }
+
+
+
+
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/tasks/{$data['task_id']}";
 

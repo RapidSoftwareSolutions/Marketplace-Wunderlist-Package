@@ -623,7 +623,7 @@ Create a Webhook.A webhook sends notifications when a list is updated.
 | accessToken  | String     | OAuth token for the current user.
 | listId       | Number     | Restricts the list of returned webhooks.
 | webhookUrl   | String     | Callback url for webhook.Maximum length is 255 characters.
-| processorType| String     | can be ''''.
+| processorType| String     | can be ''.
 | configuration| String     | Example. - generic.
 
 ## Wunderlist.deleteWebhook
@@ -708,7 +708,7 @@ The first resource that needs to be created to upload a file is the Upload resou
 | fileName | String     | File name.
 | md5sum     | String     | Md5 hash.
 
-## Wunderlist.createFileOnAmazon
+## Wunderlist.uploadFileOnAmazon
 After call createUpload endpoints , the needed information and credentials to upload your first part to the given Amazon URL.See more [here](https://developer.wunderlist.com/documentation/endpoints/upload).
 
 | Field      | Type       | Description

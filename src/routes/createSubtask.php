@@ -21,7 +21,16 @@ $app->post('/api/Wunderlist/createSubtask', function ($request, $response) {
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
     
+    if(!empty($data['completed']))
+    {
+        if($data['completed'] == 'true')
+        {
+            $data['completed'] = true;
+        } else {
+            $data['completed'] = false;
+        }
 
+    }
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/subtasks";
 

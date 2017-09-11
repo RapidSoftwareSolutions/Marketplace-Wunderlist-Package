@@ -30,6 +30,14 @@ $app->post('/api/Wunderlist/updatePositionsForListTasks', function ($request, $r
         $data['position_list_id'] = (int) $data['position_list_id'];
     }
 
+    if(!empty($data['values']))
+    {
+        foreach($data['values'] as $key => $value)
+        {
+            $data['values'][$key] = (int) $data['values'][$value];
+        }
+    }
+
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/task_positions/{$data['position_list_id']}";
 

@@ -20,7 +20,16 @@ $app->post('/api/Wunderlist/deleteReminder', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'];
+    }
+
+    if(!empty($data['reminder_id']))
+    {
+        $data['reminder_id'] = (int) $data['reminder_id'];
+    }
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/reminders/{$data['reminder_id']}";

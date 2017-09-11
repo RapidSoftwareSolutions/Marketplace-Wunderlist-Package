@@ -31,6 +31,16 @@ $app->post('/api/Wunderlist/createTask', function ($request, $response) {
         $data['list_id'] = (int) $data['list_id'] ;
     }
 
+    if(!empty($data['recurrence_count']))
+    {
+        $data['recurrence_count'] = (int) $data['recurrence_count'] ;
+    }
+
+    if(!empty($data['assignee_id']))
+    {
+        $data['assignee_id'] = (int) $data['assignee_id'];
+    }
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/tasks";

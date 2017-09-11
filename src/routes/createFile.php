@@ -25,6 +25,11 @@ $app->post('/api/Wunderlist/createFile', function ($request, $response) {
         $data['local_created_at'] = \Models\Params::toFormat($data['local_created_at'], 'Y-m-d H:i:s');
     }
 
+    if(!empty($data['task_id']))
+    {
+        $data['task_id'] = (int) $data['task_id'];
+    }
+
     $data['upload_id'] = (int) $data['upload_id'];
 
 
