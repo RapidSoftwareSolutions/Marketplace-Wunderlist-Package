@@ -24,6 +24,53 @@
         "Create WunderList application in console https://developer.wunderlist.com/apps/new",
         "After creating app, you will receive clienId and clientSecret."
     ],
+    "events":[
+        {
+            "name":"webhookEvent",
+            "description":"A webhook sends notifications when a list is updated.",
+            "payload":{
+                "event_name":"lis:update",
+                "user_id":1234,
+                "event_data":{
+                    "day_order":-1,
+                    "assigned_by_uid":1855589,
+                    "is_archived":0,
+                    "labels":[
+
+                    ],
+                    "sync_id":null,
+                    "in_history":0,
+                    "has_notifications":0,
+                    "indent":1,
+                    "checked":0,
+                    "date_added":"Fri 26 Sep 2014 08:25:05 +0000",
+                    "id":33511505,
+                    "content":"Task1",
+                    "user_id":1234,
+                    "due_date_utc":null,
+                    "children":null,
+                    "priority":1,
+                    "item_order":1,
+                    "is_deleted":0,
+                    "responsible_uid":null,
+                    "project_id":128501470,
+                    "collapsed":0,
+                    "date_string":""
+                }
+            },
+            "steps":[
+                "In createWebhook or UpdateWebhook endpoins set callback to __WEBHOOK_URL__"
+            ],
+            "args":[
+                {
+                    "name":"clientId",
+                    "type":"String",
+                    "info":"The Client ID you received from Wunderlist when you registered your application.",
+                    "required":false
+                }
+            ]
+        }
+    ],
     "blocks": [
         {
             "name": "getAccessToken",
