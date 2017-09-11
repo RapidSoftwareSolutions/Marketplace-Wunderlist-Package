@@ -47,7 +47,9 @@ Get a specific Folder.
 | folderId   | String     | Single folder id which will be returned.
 
 ## Wunderlist.createFolder
-Create a Folder.The created Folder is automatically owned by the User who creates it. Only the owner of a Folder can actually see/request it.See more in readme.
+Create a Folder.The created Folder is automatically owned by the User who creates it. Only the owner of a Folder can actually see/request it.Attention: The listIds attribute keeps track of the Lists that are part of that Folder. The listIds attribute doesn't reflect the order. If you add Lists to your folder you still need to sort the Lists via the listPositions feature to support clients without the Folder feature.
+                                                                                                                                             
+
 
 | Field      | Type       | Description
 |------------|------------|----------

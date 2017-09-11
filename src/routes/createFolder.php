@@ -25,7 +25,13 @@ $app->post('/api/Wunderlist/createFolder', function ($request, $response) {
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/folders";
 
-    
+    if(!empty($data['list_ids']))
+    {
+        foreach($data['list_ids'] as $key => $value)
+        {
+            $data['list_ids'][$key] = (int) $value;
+        }
+    }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];

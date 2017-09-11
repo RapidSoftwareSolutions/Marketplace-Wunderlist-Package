@@ -25,7 +25,17 @@ $app->post('/api/Wunderlist/updatePositionsForTaskSubtasks', function ($request,
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/subtask_positions/{$data['subtask_id']}";
 
-    
+
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'] ;
+    }
+
+
+    if(!empty($data['subtask_id']))
+    {
+        $data['subtask_id'] = (int) $data['subtask_id'] ;
+    }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];

@@ -20,8 +20,13 @@ $app->post('/api/Wunderlist/createFile', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
-    $data['localCreatedAt'] = \Models\Params::toFormat($data['localCreatedAt'], 'Y-m-d H'); 
+    if(!empty($data['local_created_at']))
+    {
+        $data['local_created_at'] = \Models\Params::toFormat($data['local_created_at'], 'Y-m-d H:i:s');
+    }
+
+    $data['upload_id'] = (int) $data['upload_id'];
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/files";

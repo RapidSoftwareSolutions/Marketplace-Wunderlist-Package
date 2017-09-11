@@ -25,7 +25,16 @@ $app->post('/api/Wunderlist/updateNote', function ($request, $response) {
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/notes/{$data['note_id']}";
 
-    
+
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'] ;
+    }
+
+    if(!empty($data['note_id']))
+    {
+        $data['note_id'] = (int) $data['note_id'] ;
+    }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];

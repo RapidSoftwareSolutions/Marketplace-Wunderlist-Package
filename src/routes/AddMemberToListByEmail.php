@@ -18,9 +18,15 @@ $app->post('/api/Wunderlist/AddMemberToListByEmail', function ($request, $respon
        'json' => ['email','list_id','muted']
     ];
 
+
+
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+
+    if(!empty($data['list_id']))
+    {
+        $data['list_id'] = (int) $data['list_id'];
+    }
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/memberships";

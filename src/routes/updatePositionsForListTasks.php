@@ -20,7 +20,15 @@ $app->post('/api/Wunderlist/updatePositionsForListTasks', function ($request, $r
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'];
+    }
+
+    if(!empty($data['position_list_id']))
+    {
+        $data['position_list_id'] = (int) $data['position_list_id'];
+    }
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/task_positions/{$data['position_list_id']}";

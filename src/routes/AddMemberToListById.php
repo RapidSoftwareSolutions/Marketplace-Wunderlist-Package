@@ -25,6 +25,15 @@ $app->post('/api/Wunderlist/AddMemberToListById', function ($request, $response)
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/memberships";
 
+    if(!empty($data['user_id']))
+    {
+        $data['user_id'] = (int) $data['user_id'];
+    }
+
+    if(!empty($data['list_id']))
+    {
+        $data['list_id'] = (int) $data['list_id'];
+    }
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);

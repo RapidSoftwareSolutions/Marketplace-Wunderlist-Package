@@ -20,7 +20,15 @@ $app->post('/api/Wunderlist/removeMemberFromList', function ($request, $response
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'] ;
+    }
+    if(!empty($data['member_id']))
+    {
+        $data['member_id'] = (int) $data['member_id'] ;
+    }
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/memberships/{$data['member_id']}";

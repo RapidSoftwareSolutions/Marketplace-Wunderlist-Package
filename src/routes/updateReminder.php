@@ -23,6 +23,18 @@ $app->post('/api/Wunderlist/updateReminder', function ($request, $response) {
     
     $data['date'] = \Models\Params::toFormat($data['date'], 'Y-m-d H:i:s');
 
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'] ;
+    }
+
+    if(!empty($data['reminder_id']))
+    {
+        $data['reminder_id'] = (int) $data['reminder_id'] ;
+    }
+
+
+
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/reminders/{$data['reminder_id']}";
 

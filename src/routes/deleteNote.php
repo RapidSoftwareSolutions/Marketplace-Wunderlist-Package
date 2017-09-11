@@ -20,7 +20,15 @@ $app->post('/api/Wunderlist/deleteNote', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'] ;
+    }
+
+    if(!empty($data['note_id']))
+    {
+        $data['note_id'] = (int) $data['note_id'] ;
+    }
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/notes/{$data['note_id']}";

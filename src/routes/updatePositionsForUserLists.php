@@ -25,7 +25,15 @@ $app->post('/api/Wunderlist/updatePositionsForUserLists', function ($request, $r
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/list_positions/{$data['position_list_id']}";
 
-    
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'] ;
+    }
+
+    if(!empty($data['position_list_id']))
+    {
+        $data['position_list_id'] = (int) $data['position_list_id'] ;
+    }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];
