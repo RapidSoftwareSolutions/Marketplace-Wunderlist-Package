@@ -49,6 +49,29 @@ $app->post('/api/Wunderlist/updateTask', function ($request, $response) {
     }
 
 
+    if(!empty($data['completed']))
+    {
+        if($data['completed'] == 'true')
+        {
+            $data['completed'] = true;
+        } else {
+            $data['completed'] = false;
+        }
+
+    }
+
+    if(!empty($data['starred']))
+    {
+        if($data['starred'] == 'true')
+        {
+            $data['starred'] = true;
+        } else {
+            $data['starred'] = false;
+        }
+
+    }
+
+
 
 
     $client = $this->httpClient;

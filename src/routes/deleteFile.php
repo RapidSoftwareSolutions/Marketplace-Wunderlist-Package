@@ -15,7 +15,7 @@ $app->post('/api/Wunderlist/deleteFile', function ($request, $response) {
     $requiredParams = ['clientId' => 'client_id', 'accessToken' => 'access_token', 'fileId' => 'file_id', 'revision' => 'revision'];
     $optionalParams = [];
     $bodyParams = [
-        'json' => ['file_id', 'revision']
+        'query' => ['file_id', 'revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
