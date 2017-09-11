@@ -20,6 +20,11 @@ $app->post('/api/Wunderlist/createUpload', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
+    if(!empty($data['part_number']))
+    {
+        $data['part_number'] = (int) $data['part_number'];
+    }
+
 
 
     $client = $this->httpClient;

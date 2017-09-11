@@ -4,23 +4,32 @@ $app->post('/api/Wunderlist/deleteFile', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','fileId','revision']);
+    $validateRes = $checkRequest->validate($request, ['clientId', 'accessToken', 'fileId', 'revision']);
 
-    if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
+    if (!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback'] == 'error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
     } else {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','fileId'=>'file_id','revision'=>'revision'];
+    $requiredParams = ['clientId' => 'client_id', 'accessToken' => 'access_token', 'fileId' => 'file_id', 'revision' => 'revision'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['file_id','revision']
+        'json' => ['file_id', 'revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+    if (!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'];
+    }
+
+    if (!empty($data['file_id']))
+    {
+        $data['file_id'] = (int) $data['file_id'];
+    }
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/files/{$data['file_id']}";

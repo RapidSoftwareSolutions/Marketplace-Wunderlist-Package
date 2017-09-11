@@ -46,6 +46,28 @@ $app->post('/api/Wunderlist/createTask', function ($request, $response) {
         $data['revision'] = (int) $data['revision'];
     }
 
+    if(!empty($data['completed']))
+    {
+        if($data['completed'] == 'true')
+        {
+            $data['completed'] = true;
+        } else {
+            $data['completed'] = false;
+        }
+
+    }
+
+    if(!empty($data['starred']))
+    {
+        if($data['starred'] == 'true')
+        {
+            $data['starred'] = true;
+        } else {
+            $data['starred'] = false;
+        }
+
+    }
+
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/tasks";
 
