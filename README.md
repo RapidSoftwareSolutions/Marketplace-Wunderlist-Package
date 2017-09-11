@@ -176,15 +176,6 @@ Mark a Member as accepted.
 | member_id  | Number     | Single member id.
 | muted      | Select     | Set true for user muted.
 
-## Wunderlist.removeMemberFromList
-Remove a Member from a List.
-
-| Field      | Type       | Description
-|------------|------------|----------
-| clientId   | credentials|  The Client ID you received from Wunderlist when you registered your application.
-| accessToken| String     | OAuth token for the current user.
-| revision   | Number     | Every entity in the Wunderlist API has a read-only revision property. This property is an integer which is updated in response to changes to that entity or any of its children. See more [here](https://developer.wunderlist.com/documentation/concepts/revisions).
-| member_id  | Number     | Single member id.
 
 ## Wunderlist.rejectInviteList
 Reject an invite to a List.
