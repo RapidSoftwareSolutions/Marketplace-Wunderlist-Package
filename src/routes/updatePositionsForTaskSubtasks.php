@@ -4,7 +4,7 @@ $app->post('/api/Wunderlist/updatePositionsForTaskSubtasks', function ($request,
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','subtaskId',' PositionsIds','revision']);
+    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','taskId',' PositionsIds','revision']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,10 +12,10 @@ $app->post('/api/Wunderlist/updatePositionsForTaskSubtasks', function ($request,
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','subtaskId'=>'subtask_id',' PositionsIds'=>'values','revision'=>'revision'];
+    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','taskId'=>'task_id',' PositionsIds'=>'values','revision'=>'revision'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['subtask_id','values','revision']
+       'json' => ['task_id','values','revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
@@ -23,7 +23,7 @@ $app->post('/api/Wunderlist/updatePositionsForTaskSubtasks', function ($request,
     
 
     $client = $this->httpClient;
-    $query_str = "https://a.wunderlist.com/api/v1/subtask_positions/{$data['subtask_id']}";
+    $query_str = "https://a.wunderlist.com/api/v1/subtask_positions/{$data['task_id']}";
 
 
     if(!empty($data['revision']))
@@ -40,9 +40,9 @@ $app->post('/api/Wunderlist/updatePositionsForTaskSubtasks', function ($request,
     }
 
 
-    if(!empty($data['subtask_id']))
+    if(!empty($data['task_id']))
     {
-        $data['subtask_id'] = (int) $data['subtask_id'] ;
+        $data['task_id'] = (int) $data['task_id'] ;
     }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);

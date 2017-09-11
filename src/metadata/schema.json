@@ -657,7 +657,7 @@
                     "name": "listId",
                     "type": "Number",
                     "info": "Folder title (maximum length is 255 characters).",
-                    "required": false,
+                    "required": true,
                     "vendorSchema": {
                         "name": "list_id"
                     }
@@ -724,7 +724,7 @@
                     "name": "listId",
                     "type": "Number",
                     "info": "Folder title (maximum length is 255 characters).",
-                    "required": false,
+                    "required": true,
                     "vendorSchema": {
                         "name": "list_id"
                     }
@@ -1829,17 +1829,17 @@
                     }
                 },
                 {
-                    "name": "taskId",
+                    "name": "listId",
                     "type": "Number",
-                    "info": "Single task id.",
+                    "info": "Single list id.",
                     "required": true,
                     "vendorSchema": {
-                        "name": "task_id"
+                        "name": "list_id"
                     }
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_positions\/{$data['task_id']}",
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/task_positions\/{$data['list_id']}",
                 "method": "get",
                 "headers": {
                     "X-Access-Token": "{$data['access_token']}",
@@ -1849,7 +1849,7 @@
                     {
                         "type": "query",
                         "parameters": [
-                            "task_id"
+                            "list_id"
                         ]
                     }
                 ]
@@ -2028,17 +2028,17 @@
                     }
                 },
                 {
-                    "name": "subtaskId",
+                    "name": "taskId",
                     "type": "Number",
-                    "info": "Single subtask id.",
+                    "info": "Single task id.",
                     "required": true,
                     "vendorSchema": {
-                        "name": "subtask_id"
+                        "name": "task_id"
                     }
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions\/{$data['subtask_id']}",
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions\/{$data['task_id']}",
                 "method": "get",
                 "headers": {
                     "X-Access-Token": "{$data['access_token']}",
@@ -2048,7 +2048,7 @@
                     {
                         "type": "query",
                         "parameters": [
-                            "subtask_id"
+                            "task_id"
                         ]
                     }
                 ]
@@ -2087,12 +2087,12 @@
                     }
                 },
                 {
-                    "name": "subtaskId",
+                    "name": "taskId",
                     "type": "Number",
-                    "info": "Single subtask id.",
+                    "info": "Single task id.",
                     "required": true,
                     "vendorSchema": {
-                        "name": "subtask_id"
+                        "name": "task_id"
                     }
                 },
                 {
@@ -2117,7 +2117,7 @@
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions\/{$data['subtask_id']}",
+                "url": "https:\/\/a.wunderlist.com\/api\/v1\/subtask_positions\/{$data['task_id']}",
                 "method": "patch",
                 "headers": {
                     "X-Access-Token": "{$data['access_token']}",
@@ -2127,7 +2127,7 @@
                     {
                         "type": "json",
                         "parameters": [
-                            "subtask_id",
+                            "task_id",
                             "values",
                             "revision"
                         ]

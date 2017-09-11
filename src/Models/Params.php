@@ -64,10 +64,20 @@ class Params
             return $value;
         }
         $time = strtotime($value);
+
+
         if(!$time)
         {
             return $value;
         }
+
+
+        if($format == 'unixTime')
+        {
+            return $time;
+        }
+
+
         $date = new \DateTime($value);
         $result = $date->format($format);
         return $result;

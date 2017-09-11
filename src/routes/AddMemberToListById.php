@@ -34,7 +34,16 @@ $app->post('/api/Wunderlist/AddMemberToListById', function ($request, $response)
     {
         $data['list_id'] = (int) $data['list_id'];
     }
-    
+
+    if(!empty($data['muted']))
+    {
+        if($data['muted'] == 'true')
+        {
+            $data['muted'] = true;
+        } else {
+            $data['muted'] = false;
+        }
+    }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];

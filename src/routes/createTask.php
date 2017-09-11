@@ -41,11 +41,14 @@ $app->post('/api/Wunderlist/createTask', function ($request, $response) {
         $data['assignee_id'] = (int) $data['assignee_id'];
     }
 
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'];
+    }
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/tasks";
 
-    
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];

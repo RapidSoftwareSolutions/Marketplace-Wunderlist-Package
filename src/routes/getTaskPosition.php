@@ -4,7 +4,7 @@ $app->post('/api/Wunderlist/getTaskPosition', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','taskId']);
+    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','listId']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,10 +12,10 @@ $app->post('/api/Wunderlist/getTaskPosition', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','taskId'=>'task_id'];
+    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','listId'=>'list_id'];
     $optionalParams = [];
     $bodyParams = [
-       'query' => ['task_id']
+       'query' => ['list_id']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
@@ -23,7 +23,7 @@ $app->post('/api/Wunderlist/getTaskPosition', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://a.wunderlist.com/api/v1/task_positions/{$data['task_id']}";
+    $query_str = "https://a.wunderlist.com/api/v1/task_positions/{$data['list_id']}";
 
 
     

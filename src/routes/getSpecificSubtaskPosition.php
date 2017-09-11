@@ -4,7 +4,7 @@ $app->post('/api/Wunderlist/getSpecificSubtaskPosition', function ($request, $re
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','subtaskId']);
+    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','taskId']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,10 +12,10 @@ $app->post('/api/Wunderlist/getSpecificSubtaskPosition', function ($request, $re
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','subtaskId'=>'subtask_id'];
+    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','taskId'=>'task_id'];
     $optionalParams = [];
     $bodyParams = [
-       'query' => ['subtask_id']
+       'query' => ['task_id']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
@@ -23,9 +23,12 @@ $app->post('/api/Wunderlist/getSpecificSubtaskPosition', function ($request, $re
     
 
     $client = $this->httpClient;
-    $query_str = "https://a.wunderlist.com/api/v1/subtask_positions/{$data['subtask_id']}";
+    $query_str = "https://a.wunderlist.com/api/v1/subtask_positions/{$data['task_id']}";
 
-    
+    if(!empty($data['task_id']))
+    {
+        $data['task_id'] = (int) $data['task_id'];
+    }
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Access-Token"=>"{$data['access_token']}", "X-Client-ID"=>"{$data['client_id']}"];

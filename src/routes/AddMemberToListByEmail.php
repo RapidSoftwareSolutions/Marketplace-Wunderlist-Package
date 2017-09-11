@@ -22,6 +22,16 @@ $app->post('/api/Wunderlist/AddMemberToListByEmail', function ($request, $respon
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
+    if(!empty($data['muted']))
+    {
+        if($data['muted'] == 'true')
+        {
+            $data['muted'] = true;
+        } else {
+            $data['muted'] = false;
+        }
+    }
+
 
     if(!empty($data['list_id']))
     {

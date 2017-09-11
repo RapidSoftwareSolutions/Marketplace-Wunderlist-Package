@@ -43,6 +43,11 @@ $app->post('/api/Wunderlist/updateTask', function ($request, $response) {
         $data['task_id'] = (int) $data['task_id'];
     }
 
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'];
+    }
+
 
 
 

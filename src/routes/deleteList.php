@@ -4,7 +4,7 @@ $app->post('/api/Wunderlist/deleteList', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','revision']);
+    $validateRes = $checkRequest->validate($request, ['clientId','accessToken','revision',"listId"]);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,15 +12,24 @@ $app->post('/api/Wunderlist/deleteList', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','revision'=>'revision'];
-    $optionalParams = ['listId'=>'list_id'];
+    $requiredParams = ['clientId'=>'client_id','accessToken'=>'access_token','revision'=>'revision','listId'=>'list_id'];
+    $optionalParams = [];
     $bodyParams = [
        'query' => ['list_id','revision']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+    if(!empty($data['list_id']))
+    {
+        $data['list_id'] = (int) $data['list_id'];
+    }
+
+    if(!empty($data['revision']))
+    {
+        $data['revision'] = (int) $data['revision'];
+    }
+
 
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/lists/{$data['list_id']}";

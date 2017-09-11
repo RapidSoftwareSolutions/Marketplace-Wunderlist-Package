@@ -31,6 +31,12 @@ $app->post('/api/Wunderlist/createSubtask', function ($request, $response) {
         }
 
     }
+
+    if(!empty($data['task_id']))
+    {
+        $data['task_id'] = (int) $data['task_id'];
+    }
+
     $client = $this->httpClient;
     $query_str = "https://a.wunderlist.com/api/v1/subtasks";
 
